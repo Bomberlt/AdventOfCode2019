@@ -3,6 +3,7 @@ import { day1input } from '../inputs/day1input';
 export function fuelRequired(mass) {
   const fuel = Math.floor(mass / 3) - 2;
   if (fuel < 0) return 0;
+  if (fuel > 6 + 2) return fuel + fuelRequired(fuel);
   return fuel;
 }
 

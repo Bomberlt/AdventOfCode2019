@@ -1,15 +1,14 @@
 import { fuelRequired, fuelCounterUpper } from './day1';
-import { day1input, oneModule } from '../inputs/day1input';
 
-describe('day1', () => {
+describe.skip('day1part1', () => {
   describe('fuelRequired', () => {
     it.each`
       mass      | fuel
       ${0}      | ${0}
       ${12}     | ${2}
       ${14}     | ${2}
-      ${1969}   | ${966}
-      ${100756} | ${50346}
+      ${1969}   | ${654}
+      ${100756} | ${33583}
     `('for mass of $mass fuel returns $fuel', ({ mass, fuel }) => {
       const result = fuelRequired(mass);
 
@@ -42,12 +41,12 @@ describe('day1', () => {
         expect(result).toBe(4);
       });
 
-      it('12, 14,  should return 970', () => {
+      it('12, 14,  should return 658', () => {
         const massesOfModules = [12, 14, 1969];
 
         const result = fuelCounterUpper(massesOfModules);
 
-        expect(result).toBe(966 + 4);
+        expect(result).toBe(654 + 4);
       });
     });
   });
