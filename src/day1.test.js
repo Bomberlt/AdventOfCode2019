@@ -5,6 +5,7 @@ describe('day1', () => {
   describe('fuelRequired', () => {
     it.each`
       mass      | fuel
+      ${0}      | ${0}
       ${12}     | ${2}
       ${14}     | ${2}
       ${1969}   | ${654}
