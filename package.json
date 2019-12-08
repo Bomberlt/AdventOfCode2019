@@ -4,25 +4,20 @@
     "test": "jest --watch",
     "day1": "node -e 'require(\"src/day1.js\").fuelCounterUpperDay1()'",
     "day12": "day1.js fuelCounterUpperDay1",
-    "start": "babel-node src/day1.js"
+    "start": "babel-node src/day1.js --presets=env"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/preset-env": "^7.5.5",
-    "@types/jest": "^24.0.18",
-    "@types/node": "^12.7.3",
-    "babel-core": "^7.0.0-beta.3",
-    "babel-jest": "^24.9.0",
-    "jest": "^24.9.0"
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "^20.0.3",
+    "jest": "^23.6.0"
   },
   "name": "AdventOfCode2019",
   "description": "AdventOfCode2019",
   "version": "1.0.0",
   "main": "src/day1.js",
   "dependencies": {
-    "babel-node": "0.0.1-security",
-    "babel-preset-env": "^1.7.0",
-    "make-runnable": "^1.3.6"
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.6.0"
   },
   "repository": {
     "type": "git",
@@ -33,5 +28,12 @@
   "bugs": {
     "url": "https://github.com/Bomberlt/AdventOfCode2019/issues"
   },
-  "homepage": "https://github.com/Bomberlt/AdventOfCode2019#readme"
+  "homepage": "https://github.com/Bomberlt/AdventOfCode2019#readme",
+  "jest": {
+    "testURL": "http://localhost:8080",
+    "testEnvironment": "node"
+  },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0"
+  }
 }
