@@ -11,5 +11,20 @@
     "babel-core": "^7.0.0-beta.3",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0"
-  }
+  },
+  "name": "AdventOfCode2019",
+  "description": "AdventOfCode2019",
+  "version": "1.0.0",
+  "main": "src/day1.js",
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bomberlt/AdventOfCode2019.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/Bomberlt/AdventOfCode2019/issues"
+  },
+  "homepage": "https://github.com/Bomberlt/AdventOfCode2019#readme"
 }
