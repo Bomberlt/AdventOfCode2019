@@ -20,9 +20,12 @@ describe('day2', () => {
       }
     );
 
-    let consoleOutput;
+    let consoleOutput = null;
     const mockedLog = output => (consoleOutput = output);
-    beforeEach(() => (console.log = mockedLog));
+    beforeEach(() => {
+      consoleOutput = null;
+      console.log = mockedLog;
+    });
 
     it('logs inputs that results in 19690720', () => {
       const input1val = 19690719;
@@ -33,6 +36,17 @@ describe('day2', () => {
       opcode1(input1, input2, 3, arr);
 
       expect(consoleOutput).toBe(100 * input1 + input2);
+    });
+
+    it('doesnt log inputs that results in 19690721', () => {
+      const input1val = 19690720;
+      const input2val = 1;
+      const arr = [1, input1val, input2val, 3, 4];
+      const input1 = 1;
+      const input2 = 2;
+      opcode1(input1, input2, 3, arr);
+
+      expect(consoleOutput).toBe(null);
     });
   });
 
@@ -52,9 +66,12 @@ describe('day2', () => {
       }
     );
 
-    let consoleOutput;
+    let consoleOutput = null;
     const mockedLog = output => (consoleOutput = output);
-    beforeEach(() => (console.log = mockedLog));
+    beforeEach(() => {
+      consoleOutput = null;
+      console.log = mockedLog;
+    });
 
     it('logs inputs that results in 19690720', () => {
       const input1val = 19690720;
@@ -63,9 +80,21 @@ describe('day2', () => {
 
       const input1 = 1;
       const input2 = 2;
-      opcode1(input1, input2, 3, arr);
+      opcode2(input1, input2, 3, arr);
 
       expect(consoleOutput).toBe(100 * input1 + input2);
+    });
+
+    it('doesnt log inputs that results in 19690721', () => {
+      const input1val = 19690721;
+      const input2val = 1;
+      const arr = [2, input1val, input2val, 3, 4];
+
+      const input1 = 1;
+      const input2 = 2;
+      opcode2(input1, input2, 3, arr);
+
+      expect(consoleOutput).toBe(null);
     });
   });
 

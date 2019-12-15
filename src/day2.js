@@ -1,11 +1,15 @@
-import { day2input } from '../inputs/day2input';
+import { day2input, day2inputChanged } from '../inputs/day2input';
 
 export function opcode1(input1Index, input2Index, outputIndex, array) {
   const a = array[input1Index];
   const b = array[input2Index];
   const newArray = array.slice();
-  newArray[outputIndex] = a + b;
-  console.log(102);
+  const output = a + b;
+  newArray[outputIndex] = output;
+  //console.log(output);
+  if (output == 19690720) {
+    console.log(100 * input1Index + input2Index);
+  }
   return newArray;
 }
 
@@ -13,8 +17,12 @@ export function opcode2(input1Index, input2Index, outputIndex, array) {
   const a = array[input1Index];
   const b = array[input2Index];
   const newArray = array.slice();
-  newArray[outputIndex] = a * b;
-  console.log(102);
+  const output = a * b;
+  newArray[outputIndex] = output;
+  //console.log(output);
+  if (output == 19690720) {
+    console.log(100 * input1Index + input2Index);
+  }
   return newArray;
 }
 
@@ -60,11 +68,31 @@ export function intcodeReduce(program) {
 }
 
 export function day2() {
-  const input = day2input();
+  const input = day2inputChanged();
   console.log('Day2 input');
   console.log(input);
   const output = intcode(input);
   console.log('Day2 output');
   console.log(output);
   console.log('Day2 answer = ' + output[0]);
+}
+
+export function day2part2() {
+  const input = day2input();
+  console.log('Day2 part2:');
+  let found = false;
+  for (let i = 0; i < 100; i++) {
+    for (let j = 0; j < 99; j++) {
+      if (!found) {
+        //console.log('i:', i, 'j;', j);
+        const alteredInput = [input[0], i, j, ...input.slice(3)];
+        const output = intcode(alteredInput);
+        if (output[0] == 19690720) {
+          found = true;
+          console.log('Day2 part2 answer = ' + (100 * i + j));
+        }
+      }
+    }
+  }
+  if (!found) console.log('Day2 part2 answer not found :(');
 }
