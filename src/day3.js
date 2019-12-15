@@ -1,4 +1,4 @@
-export function move(direction, moves, startPos, existingMarks = []) {
+export function move(direction, moves, startPos, wire = 0, existingMarks = []) {
   const startX = startPos[0];
   const startY = startPos[1];
   let marked = [];
@@ -8,35 +8,41 @@ export function move(direction, moves, startPos, existingMarks = []) {
     if (direction == 'L') pos = [startX - 1 - i, startY];
     if (direction == 'U') pos = [startX, startY + 1 + i];
     if (direction == 'D') pos = [startX, startY - 1 - i];
-    let mark = null;
+    let toMark = null;
+    const existingMarksInPos = existingMarks.filter(
+      m => m.pos[0] == pos[0] && m.pos[1] == pos[1]
+    );
+
+    let wiresIntersecting;
     if (direction == 'R' || direction == 'L') {
-      mark = '-';
-      if (existingMarks.some(mark => markedVertically(mark, pos))) {
-        mark = 'X';
-      }
+      toMark = '-';
+      wiresIntersecting = wiresIntersectingWithHorizontal(existingMarksInPos);
     } else {
-      mark = '|';
-      if (existingMarks.some(mark => markedHorizontally(mark, pos))) {
-        mark = 'X';
-      }
+      toMark = '|';
+      wiresIntersecting = wiresIntersectingWithVertical(existingMarksInPos);
     }
-    marked.push({ pos, marked: mark });
+
+    if (wiresIntersecting.length > 0) {
+      toMark = '+';
+    }
+    if (wiresIntersecting.some(w => w !== wire)) {
+      toMark = 'X';
+    }
+
+    marked.push({ pos, marked: toMark, wire: wire });
   }
   return marked;
 }
 
-function markedVertically(mark, pos) {
-  return (
-    mark.pos[0] == pos[0] &&
-    mark.pos[1] == pos[1] &&
-    (mark.marked == '|' || mark.marked == 'X')
-  );
+function wiresIntersectingWithHorizontal(marks) {
+  return marks
+    .filter(m => m.marked == '|' || m.marked == 'X' || m.marked == '+')
+    .map(m => m.wire);
 }
 
-function markedHorizontally(mark, pos) {
-  return (
-    mark.pos[0] == pos[0] &&
-    mark.pos[1] == pos[1] &&
-    (mark.marked == '-' || mark.marked == 'X')
-  );
+function wiresIntersectingWithVertical(marks) {
+  return marks
+    .filter(m => m.marked == '-' || m.marked == 'X' || m.marked == '+')
+
+    .map(m => m.wire);
 }
