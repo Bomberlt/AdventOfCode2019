@@ -1,6 +1,13 @@
 export function move(direction, moves, startPos, wire = 0, existingMarks = []) {
   const startX = startPos[0];
   const startY = startPos[1];
+  const lastStep =
+    existingMarks.length > 0 ? existingMarks[existingMarks.length - 1] : null;
+  const stepsTaken = lastStep
+    ? lastStep.wire == wire
+      ? lastStep.steps
+      : 0
+    : 0;
   let markedCells = [{ pos: startPos, marked: '+', wire }];
   for (let i = 0; i < moves; i++) {
     let pos = null;
@@ -25,24 +32,43 @@ export function move(direction, moves, startPos, wire = 0, existingMarks = []) {
     if (wiresIntersecting.length > 0) {
       toMark = '+';
     }
-    if (wiresIntersecting.some(w => w !== wire)) {
+    let crossingSteps = 0;
+    if (wiresIntersecting.some(w => w.wire !== wire)) {
       toMark = 'X';
+      crossingSteps = lowestSteps(
+        wiresIntersecting.filter(w => w.wire !== wire)
+      );
+      console.log('crossingSteps');
+      console.log(crossingSteps);
     }
 
-    markedCells.push({ pos, marked: toMark, wire: wire });
+    markedCells.push({
+      pos,
+      marked: toMark,
+      wire: wire,
+      steps: crossingSteps + stepsTaken + i + 1
+    });
   }
   return markedCells;
+}
+
+function lowestSteps(marks) {
+  console.log(marks);
+  return marks.reduce(
+    (min, mark) => (mark.steps < min ? mark.steps : min),
+    marks[0].steps
+  );
 }
 
 function wiresIntersectingWithHorizontal(marks) {
   return marks
     .filter(m => m.marked == '|' || m.marked == 'X' || m.marked == '+')
-    .map(m => m.wire);
+    .map(m => m);
 }
 
 function wiresIntersectingWithVertical(marks) {
   return marks
     .filter(m => m.marked == '-' || m.marked == 'X' || m.marked == '+')
 
-    .map(m => m.wire);
+    .map(m => m);
 }

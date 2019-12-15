@@ -53,6 +53,13 @@ export function closestDistance(cells) {
   return closestDistance;
 }
 
+export function lowestSteps(cells) {
+  return cells.reduce(
+    (min, cell) => (cell.steps < min ? cell.steps : min),
+    cells[0].steps
+  );
+}
+
 export function intersectionPointClosest(wire0, wire1) {
   //console.log('wire0');
   //console.log(wire0);
@@ -65,10 +72,28 @@ export function intersectionPointClosest(wire0, wire1) {
   return closestDistance(tiles.filter(tile => tile.marked == 'X'));
 }
 
+export function intersectionPointLowestSteps(wire0, wire1) {
+  console.log('laying wire 0');
+  let tiles = layWire(wire0, 0);
+  console.log('laying wire 1');
+  tiles = layWire(wire1, 1, tiles);
+  console.log('finding closest from:');
+  console.log(tiles.filter(tile => tile.marked == 'X'));
+  return lowestSteps(tiles.filter(tile => tile.marked == 'X'));
+}
+
 export function day3() {
   const input = day3input();
   // console.log('Day2 input');
   // console.log(input);
   const output = intersectionPointClosest(input[0], input[1]);
+  console.log(output);
+}
+
+export function day3part2() {
+  const input = day3input();
+  // console.log('Day2 input');
+  // console.log(input);
+  const output = intersectionPointLowestSteps(input[0], input[1]);
   console.log(output);
 }

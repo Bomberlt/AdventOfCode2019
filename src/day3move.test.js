@@ -16,7 +16,8 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [1, 0],
               marked: '-',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
           });
 
@@ -36,12 +37,14 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [1, 0],
               marked: '-',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
             expect(result).toContainEqual({
               pos: [2, 0],
               marked: '-',
-              wire: 0
+              wire: 0,
+              steps: 2
             });
           });
         });
@@ -53,7 +56,8 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [-1, 0],
               marked: '-',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
           });
 
@@ -63,12 +67,14 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [-1, 0],
               marked: '-',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
             expect(result).toContainEqual({
               pos: [-2, 0],
               marked: '-',
-              wire: 0
+              wire: 0,
+              steps: 2
             });
           });
         });
@@ -80,7 +86,8 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [0, 1],
               marked: '|',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
           });
 
@@ -90,12 +97,14 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [0, 1],
               marked: '|',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
             expect(result).toContainEqual({
               pos: [0, 2],
               marked: '|',
-              wire: 0
+              wire: 0,
+              steps: 2
             });
           });
         });
@@ -107,7 +116,8 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [0, -1],
               marked: '|',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
           });
 
@@ -117,12 +127,14 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [0, -1],
               marked: '|',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
             expect(result).toContainEqual({
               pos: [0, -2],
               marked: '|',
-              wire: 0
+              wire: 0,
+              steps: 2
             });
           });
         });
@@ -135,7 +147,8 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [2, 1],
               marked: '-',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
           });
 
@@ -145,12 +158,14 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [2, 1],
               marked: '-',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
             expect(result).toContainEqual({
               pos: [3, 1],
               marked: '-',
-              wire: 0
+              wire: 0,
+              steps: 2
             });
           });
         });
@@ -162,7 +177,8 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [0, 1],
               marked: '-',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
           });
 
@@ -172,12 +188,14 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [0, 1],
               marked: '-',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
             expect(result).toContainEqual({
               pos: [-1, 1],
               marked: '-',
-              wire: 0
+              wire: 0,
+              steps: 2
             });
           });
         });
@@ -189,7 +207,8 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [1, 2],
               marked: '|',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
           });
 
@@ -199,12 +218,14 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [1, 2],
               marked: '|',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
             expect(result).toContainEqual({
               pos: [1, 3],
               marked: '|',
-              wire: 0
+              wire: 0,
+              steps: 2
             });
           });
         });
@@ -216,7 +237,8 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [1, 0],
               marked: '|',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
           });
 
@@ -226,12 +248,14 @@ describe('day3', () => {
             expect(result).toContainEqual({
               pos: [1, 0],
               marked: '|',
-              wire: 0
+              wire: 0,
+              steps: 1
             });
             expect(result).toContainEqual({
               pos: [1, -1],
               marked: '|',
-              wire: 0
+              wire: 0,
+              steps: 2
             });
           });
         });
@@ -245,7 +269,9 @@ describe('day3', () => {
         describe('when already marked as "|"', () => {
           describe('by same wire', () => {
             it('should not mark as intersection', () => {
-              const existingMarks = [{ pos: [1, 0], marked: '|', wire: 0 }];
+              const existingMarks = [
+                { pos: [1, 0], marked: '|', wire: 0, steps: 1 }
+              ];
               const newMarks = move('R', 2, [0, 0], 0, existingMarks);
 
               expect(newMarks).not.toContainEqual({
@@ -255,33 +281,38 @@ describe('day3', () => {
               expect(newMarks).toContainEqual({
                 pos: [1, 0],
                 marked: '+',
-                wire: 0
+                wire: 0,
+                steps: 2
               });
             });
           });
 
           describe('by other wire', () => {
             it('should mark as intersection', () => {
-              const existingMarks = [{ pos: [1, 0], marked: '|', wire: 1 }];
+              const existingMarks = [
+                { pos: [1, 0], marked: '|', wire: 1, steps: 1 }
+              ];
               const newMarks = move('R', 2, [0, 0], 0, existingMarks);
 
               expect(newMarks).toContainEqual({
                 pos: [1, 0],
                 marked: 'X',
-                wire: 0
+                wire: 0,
+                steps: 2
               });
             });
           });
         });
         describe('when already marked as intersection', () => {
           it('should mark as intersection', () => {
-            const existingMarks = [{ pos: [1, 0], marked: 'X' }];
+            const existingMarks = [{ pos: [1, 0], marked: 'X', steps: 1 }];
             const newMarks = move('R', 2, [0, 0], 0, existingMarks);
 
             expect(newMarks).toContainEqual({
               pos: [1, 0],
               marked: 'X',
-              wire: 0
+              wire: 0,
+              steps: 2
             });
           });
         });
@@ -314,7 +345,9 @@ describe('day3', () => {
         describe('by same wire', () => {
           describe('when already marked as "-"', () => {
             it('should not mark as intersection', () => {
-              const existingMarks = [{ pos: [0, 1], marked: '-', wire: 0 }];
+              const existingMarks = [
+                { pos: [0, 1], marked: '-', wire: 0, steps: 1 }
+              ];
               const newMarks = move('U', 2, [0, 0], 0, existingMarks);
 
               expect(newMarks).not.toContainEqual({
@@ -325,7 +358,8 @@ describe('day3', () => {
               expect(newMarks).toContainEqual({
                 pos: [0, 1],
                 marked: '+',
-                wire: 0
+                wire: 0,
+                steps: 2
               });
             });
           });
@@ -334,13 +368,16 @@ describe('day3', () => {
         describe('by other wire', () => {
           describe('when already marked as "-"', () => {
             it('should mark as intersection', () => {
-              const existingMarks = [{ pos: [0, 1], marked: '-', wire: 1 }];
+              const existingMarks = [
+                { pos: [0, 1], marked: '-', wire: 1, steps: 1 }
+              ];
               const newMarks = move('U', 2, [0, 0], 0, existingMarks);
 
               expect(newMarks).toContainEqual({
                 pos: [0, 1],
                 marked: 'X',
-                wire: 0
+                wire: 0,
+                steps: 2
               });
             });
           });
@@ -348,13 +385,14 @@ describe('day3', () => {
 
         describe('when already marked as "-"', () => {
           it('should mark as intersection', () => {
-            const existingMarks = [{ pos: [0, 1], marked: 'X' }];
+            const existingMarks = [{ pos: [0, 1], marked: 'X', steps: 1 }];
             const newMarks = move('U', 2, [0, 0], 0, existingMarks);
 
             expect(newMarks).toContainEqual({
               pos: [0, 1],
               marked: 'X',
-              wire: 0
+              wire: 0,
+              steps: 2
             });
           });
         });
