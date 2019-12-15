@@ -22,7 +22,7 @@ describe('day3', () => {
       );
 
       it('calls move twice', () => {
-        layWire(['R3', 'U4'], 1);
+        layWire(['R3', 'U4'], 1, []);
 
         expect(day3move.move).toBeCalledTimes(2);
       });
@@ -82,7 +82,7 @@ describe('day3', () => {
           }
         );
 
-        layWire(['L5', 'D6', 'R1']);
+        layWire(['L5', 'D6', 'R1'], 0, []);
 
         expect(day3move.move).toBeCalledTimes(3);
       });

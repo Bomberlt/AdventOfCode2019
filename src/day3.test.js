@@ -1,11 +1,16 @@
-import { layWire, distance } from './day3';
+import {
+  layWire,
+  distance,
+  closestDistance,
+  intersectionPointClosest
+} from './day3';
 
 describe('day3', () => {
   //TODO: Maybe add '+' on corners
   describe('layWire', () => {
     //layWire merges arrays of marked cells
     it('returns merged', () => {
-      const markedCells = layWire(['R1', 'L2'], 0);
+      const markedCells = layWire(['R1', 'L2'], 0, []);
 
       expect(markedCells).toEqual(
         expect.arrayContaining([
@@ -52,5 +57,43 @@ describe('day3', () => {
     );
   });
 
-  //TODO: Test for: shortest distance returns
+  //shortest distance returns
+  describe('closestDistance', () => {
+    it('returns closest point', () => {
+      const result = closestDistance([{ pos: [1, 1] }]);
+      expect(result).toEqual(2);
+    });
+    it('returns nearest point', () => {
+      const result = closestDistance([{ pos: [3, 2] }, { pos: [2, 2] }]);
+      expect(result).toEqual(4);
+    });
+  });
+  describe('intersectionPointClosest', () => {
+    it('example 1', () => {
+      const wire0 = ['R8', 'U5', 'L5', 'D3'];
+      const wire1 = ['U7', 'R6', 'D4', 'L4'];
+
+      const result = intersectionPointClosest(wire0, wire1);
+
+      expect(result).toEqual(6);
+    });
+    it('example 2', () => {
+      const wire0 = [
+        'R75',
+        'D30',
+        'R83',
+        'U83',
+        'L12',
+        'D49',
+        'R71',
+        'U7',
+        'L72'
+      ];
+      const wire1 = ['U62', 'R66', 'U55', 'R34', 'D71', 'R55', 'D58', 'R83'];
+
+      const result = intersectionPointClosest(wire0, wire1);
+
+      expect(result).toEqual(159);
+    });
+  });
 });
