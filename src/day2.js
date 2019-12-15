@@ -5,6 +5,7 @@ export function opcode1(input1Index, input2Index, outputIndex, array) {
   const b = array[input2Index];
   const newArray = array.slice();
   newArray[outputIndex] = a + b;
+  console.log(102);
   return newArray;
 }
 
@@ -13,6 +14,7 @@ export function opcode2(input1Index, input2Index, outputIndex, array) {
   const b = array[input2Index];
   const newArray = array.slice();
   newArray[outputIndex] = a * b;
+  console.log(102);
   return newArray;
 }
 
@@ -33,12 +35,36 @@ export function oneOp(program, opIndex) {
 }
 
 export function intcode(program) {
+  program = program.map(x => parseInt(x));
   let i = 0;
-  const afterOneOp = oneOp(program, i);
-  i += 4;
-  //console.log(afterOneOp[i]);
-  if (afterOneOp[i] == 99) return afterOneOp;
-  return oneOp(afterOneOp, i);
+  do {
+    program = oneOp(program, i);
+    i += 4;
+  } while (program[i] != 99 && program[i] != undefined);
+  return program;
+}
+export function intcodeReduce(program) {
+  program = program.map(x => parseInt(x));
+
+  return program.reduce((acc, val, i, arr) => {
+    if (i % 4) {
+      return acc;
+    }
+    if (acc[i] == 99) {
+      //console.log('break' + i);
+      arr.splice(1);
+      return acc;
+    }
+    return oneOp(acc, i);
+  }, program);
 }
 
-console.log(intcode(day2input()));
+export function day2() {
+  const input = day2input();
+  console.log('Day2 input');
+  console.log(input);
+  const output = intcode(input);
+  console.log('Day2 output');
+  console.log(output);
+  console.log('Day2 answer = ' + output[0]);
+}

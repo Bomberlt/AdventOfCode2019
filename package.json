@@ -2,9 +2,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --watch",
-    "day1": "node -e 'require(\"src/day1.js\").fuelCounterUpperDay1()'",
-    "day12": "day1.js fuelCounterUpperDay1",
-    "start": "babel-node src/day1.js --presets=env"
+    "start": "babel-node src/days.js --presets=env"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

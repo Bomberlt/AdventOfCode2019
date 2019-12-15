@@ -11,8 +11,6 @@ export function fuelCounterUpper(modulesMasses) {
   return modulesMasses.reduce((acc, mass) => acc + fuelRequired(mass), 0);
 }
 
-export function fuelCounterUpperDay1() {
-  return fuelCounterUpper(day1input());
+export function day1() {
+  console.log(fuelCounterUpper(day1input()));
 }
-
-console.log(fuelCounterUpperDay1());
