@@ -1,0 +1,109 @@
+export function possibleNextDigit(lastDigit, pairIndex, currentIndex) {
+  if (pairIndex == currentIndex - 1) return [lastDigit];
+  const arr = new Array(10 - lastDigit).fill(9);
+  return arr.map((val, i) => val - i);
+}
+
+export function guessCombinations(min, max) {
+  const minString = min.toString();
+  const minFirstDigit = parseInt(minString[0]);
+  const firstDigits = new Array(10 - minFirstDigit)
+    .fill(9)
+    .map((val, i) => val - i);
+  console.log('firstDigits');
+  console.log(firstDigits);
+
+  let combinations = [];
+  const pairIndexes = pairsIndexes();
+  pairIndexes.forEach(pairIndex => {
+    firstDigits.forEach(firstDigit => {
+      let secondDigits = possibleNextDigit(firstDigit, pairIndex, 1);
+      secondDigits.forEach(secondDigit => {
+        let thirdDigits = possibleNextDigit(secondDigit, pairIndex, 2);
+        thirdDigits.forEach(thirdDigit => {
+          let fourthDigits = possibleNextDigit(thirdDigit, pairIndex, 3);
+          fourthDigits.forEach(fourthDigit => {
+            let fifthDigits = possibleNextDigit(fourthDigit, pairIndex, 4);
+            fifthDigits.forEach(fiftDigit => {
+              let sixthDigits = possibleNextDigit(fiftDigit, pairIndex, 5);
+              sixthDigits.forEach(sixthDigit => {
+                const combination =
+                  sixthDigit +
+                  fiftDigit * 10 +
+                  fourthDigit * 100 +
+                  thirdDigit * 1000 +
+                  secondDigit * 10000 +
+                  firstDigit * 100000;
+                if (combination >= min && combination <= max) {
+                  if (!combinations.includes(combination)) {
+                    combinations.push(combination);
+                  }
+                }
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+  console.log('combinations');
+  console.log(combinations);
+  console.log(combinations[combinations.length - 1]);
+  const smallest = combinations.reduce(
+    (min, val) => (val < min ? val : min),
+    combinations[0]
+  );
+  const biggest = combinations.reduce(
+    (min, val) => (val > min ? val : min),
+    combinations[0]
+  );
+  console.log(smallest);
+  console.log('smallest');
+  console.log(biggest);
+  console.log('biggest');
+  return combinations.filter((v, i, a) => a.indexOf(v) === i);
+}
+
+export function pairsIndexes() {
+  const variants = [];
+  // For every digit
+  for (let i = 0; i < 5; i++) {
+    // One pair
+    variants.push([i]);
+    // Two pairs j = i+1 - 5, i<5
+    if (i < 4) {
+      for (let j = i + 1; j < 5; j++) {
+        // Second pair j
+        variants.push([i, j]);
+      }
+    }
+    // Three pairs j = i-5
+    if (i < 3) {
+      for (let j = i + 1; j < 5; j++) {
+        // Second pair j
+        // Third pair k = j - 5
+        for (let k = j + 1; k < 5; k++) {
+          variants.push([i, j, k]);
+        }
+      }
+    }
+    // Four pairs
+    if (i < 2) {
+      for (let j = i + 1; j < 5; j++) {
+        // Second pair j
+        // Third pair k = j - 5
+        for (let k = j + 1; k < 5; k++) {
+          // Third pair k
+          // Fourth pair l = k - 5
+          for (let l = k + 1; l < 5; l++) {
+            // Fourth pair l
+            variants.push([i, j, k, l]);
+          }
+        }
+      }
+    }
+  }
+  // Five pairs
+  variants.push([0, 1, 2, 3, 4]);
+  return variants;
+}
