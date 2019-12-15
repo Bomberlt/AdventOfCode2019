@@ -1,4 +1,4 @@
-import { move } from './day3';
+import { move } from './day3move';
 
 describe('day3', () => {
   // move marks to right direction
