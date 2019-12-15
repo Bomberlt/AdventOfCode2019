@@ -1,7 +1,7 @@
 export function move(direction, moves, startPos, wire = 0, existingMarks = []) {
   const startX = startPos[0];
   const startY = startPos[1];
-  let markedCells = [];
+  let markedCells = [{ pos: startPos, marked: '+', wire }];
   for (let i = 0; i < moves; i++) {
     let pos = null;
     if (direction == 'R') pos = [startX + 1 + i, startY];

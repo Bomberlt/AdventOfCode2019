@@ -5,7 +5,7 @@ export function layWire(commands, wire = 0, initialTiles = []) {
   let markedTiles = initialTiles;
   commands.forEach(command => {
     const direction = command.split('')[0];
-    const moves = parseInt(command.split('')[1]);
+    const moves = parseInt(command.substring(1));
     markedTiles = markedTiles.concat(
       move(direction, moves, startPos, wire, markedTiles)
     );

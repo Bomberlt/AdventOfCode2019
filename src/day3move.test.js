@@ -20,6 +20,16 @@ describe('day3', () => {
             });
           });
 
+          it('1 marks current cell', () => {
+            const result = move('R', 1, [0, 0]);
+
+            expect(result).toContainEqual({
+              pos: [0, 0],
+              marked: '+',
+              wire: 0
+            });
+          });
+
           it('2 marks 2 cells to right', () => {
             const result = move('R', 2, [0, 0]);
 
