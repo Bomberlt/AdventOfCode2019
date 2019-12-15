@@ -14,7 +14,7 @@ describe('day3', () => {
 
           expect(result).toContainEqual({
             pos: [1, 0],
-            marked: '|'
+            marked: '-'
           });
         });
 
@@ -23,11 +23,11 @@ describe('day3', () => {
 
           expect(result).toContainEqual({
             pos: [1, 0],
-            marked: '|'
+            marked: '-'
           });
           expect(result).toContainEqual({
             pos: [2, 0],
-            marked: '|'
+            marked: '-'
           });
         });
       });
@@ -38,7 +38,7 @@ describe('day3', () => {
 
           expect(result).toContainEqual({
             pos: [-1, 0],
-            marked: '|'
+            marked: '-'
           });
         });
 
@@ -47,11 +47,11 @@ describe('day3', () => {
 
           expect(result).toContainEqual({
             pos: [-1, 0],
-            marked: '|'
+            marked: '-'
           });
           expect(result).toContainEqual({
             pos: [-2, 0],
-            marked: '|'
+            marked: '-'
           });
         });
       });
@@ -111,7 +111,7 @@ describe('day3', () => {
 
           expect(result).toContainEqual({
             pos: [2, 1],
-            marked: '|'
+            marked: '-'
           });
         });
 
@@ -120,11 +120,11 @@ describe('day3', () => {
 
           expect(result).toContainEqual({
             pos: [2, 1],
-            marked: '|'
+            marked: '-'
           });
           expect(result).toContainEqual({
             pos: [3, 1],
-            marked: '|'
+            marked: '-'
           });
         });
       });
@@ -135,7 +135,7 @@ describe('day3', () => {
 
           expect(result).toContainEqual({
             pos: [0, 1],
-            marked: '|'
+            marked: '-'
           });
         });
 
@@ -144,11 +144,11 @@ describe('day3', () => {
 
           expect(result).toContainEqual({
             pos: [0, 1],
-            marked: '|'
+            marked: '-'
           });
           expect(result).toContainEqual({
             pos: [-1, 1],
-            marked: '|'
+            marked: '-'
           });
         });
       });
@@ -213,19 +213,48 @@ describe('day3', () => {
           expect(newMarks).toContainEqual({ pos: [1, 0], marked: 'X' });
         });
       });
-      // describe('when already marked as "-"', () => {
-      //   it('should not mark as intersection', () => {
-      //     const existingMarks = [{ pos: [1, 0], marked: '-' }];
-      //     const newMarks = move('R', 2, [0, 0], existingMarks);
 
-      //     expect(newMarks).not.toContainEqual({ pos: [1, 0], marked: 'X' });
-      //   });
-      // });
+      describe('when already marked as "-"', () => {
+        it('should not mark as intersection', () => {
+          const existingMarks = [{ pos: [1, 0], marked: '-' }];
+          const newMarks = move('R', 2, [0, 0], existingMarks);
+
+          expect(newMarks).not.toContainEqual({ pos: [1, 0], marked: 'X' });
+        });
+      });
+
       describe('when not marked', () => {
         it('should not mark as intersection', () => {
           const newMarks = move('R', 2, [0, 0]);
 
           expect(newMarks).not.toContainEqual({ pos: [1, 0], marked: 'X' });
+        });
+      });
+    });
+    describe('moving vertically', () => {
+      describe('when already marked as "-" or "+"', () => {
+        it('should mark as intersection', () => {
+          const existingMarks = [{ pos: [0, 1], marked: '-' }];
+          const newMarks = move('U', 2, [0, 0], existingMarks);
+
+          expect(newMarks).toContainEqual({ pos: [0, 1], marked: 'X' });
+        });
+      });
+
+      describe('when already marked as "|"', () => {
+        it('should not mark as intersection', () => {
+          const existingMarks = [{ pos: [0, 1], marked: '|' }];
+          const newMarks = move('U', 2, [0, 0], existingMarks);
+
+          expect(newMarks).not.toContainEqual({ pos: [0, 1], marked: 'X' });
+        });
+      });
+
+      describe('when not marked', () => {
+        it('should not mark as intersection', () => {
+          const newMarks = move('U', 2, [0, 0]);
+
+          expect(newMarks).not.toContainEqual({ pos: [0, 1], marked: 'X' });
         });
       });
     });
