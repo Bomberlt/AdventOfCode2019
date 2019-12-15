@@ -9,9 +9,9 @@ export function move(direction, moves, startPos, wire = 0, existingMarks = []) {
     if (direction == 'U') pos = [startX, startY + 1 + i];
     if (direction == 'D') pos = [startX, startY - 1 - i];
     let toMark = null;
-    const existingMarksInPos = existingMarks.filter(
-      m => m.pos[0] == pos[0] && m.pos[1] == pos[1]
-    );
+    const existingMarksInPos = existingMarks
+      .filter(m => m.pos[0] == pos[0])
+      .filter(m => m.pos[1] == pos[1]);
 
     let wiresIntersecting;
     if (direction == 'R' || direction == 'L') {

@@ -2,7 +2,8 @@ import {
   layWire,
   distance,
   closestDistance,
-  intersectionPointClosest
+  intersectionPointClosest,
+  marksTo2DArray
 } from './day3';
 
 describe('day3', () => {
@@ -126,6 +127,30 @@ describe('day3', () => {
       const result = intersectionPointClosest(wire0, wire1);
 
       expect(result).toEqual(135);
+    });
+  });
+
+  describe('marksTo2DArray', () => {
+    it('transforms', () => {
+      const marks = [
+        { pos: [0, 0], marked: '-' },
+        { pos: [0, 1], marked: '-' },
+        { pos: [1, 0], marked: '-' },
+        { pos: [2, 0], marked: '-' },
+        { pos: [3, 0], marked: '-' },
+        { pos: [4, 0], marked: '-' }
+      ];
+      const expected = [
+        [{ marked: '-' }, { marked: '-' }],
+        [{ marked: '-' }, { marked: '-' }],
+        [{ marked: '-' }, { marked: '-' }],
+        [{ marked: '-' }, { marked: '-' }],
+        [{ marked: '-' }, { marked: '-' }]
+      ];
+
+      const result = marksTo2DArray(marks);
+
+      expect(result).toEqual(expected);
     });
   });
 });
