@@ -1,6 +1,6 @@
 import { move } from './day3';
 
-describe('day2', () => {
+describe('day3', () => {
   //op marks to right direction
   //move marks right amount of steps
   describe('move', () => {
@@ -52,6 +52,54 @@ describe('day2', () => {
           });
         });
       });
+
+      describe('up', () => {
+        it('1 marks 1 cells to up', () => {
+          const result = move('U', 1, [0, 0]);
+
+          expect(result).toContainEqual({
+            pos: [0, 1],
+            marked: true
+          });
+        });
+
+        it('2 marks 2 cells to up', () => {
+          const result = move('U', 2, [0, 0]);
+
+          expect(result).toContainEqual({
+            pos: [0, 1],
+            marked: true
+          });
+          expect(result).toContainEqual({
+            pos: [0, 2],
+            marked: true
+          });
+        });
+      });
+
+      describe('down', () => {
+        it('1 marks 1 cells to down', () => {
+          const result = move('D', 1, [0, 0]);
+
+          expect(result).toContainEqual({
+            pos: [0, -1],
+            marked: true
+          });
+        });
+
+        it('2 marks 2 cells to down', () => {
+          const result = move('D', 2, [0, 0]);
+
+          expect(result).toContainEqual({
+            pos: [0, -1],
+            marked: true
+          });
+          expect(result).toContainEqual({
+            pos: [0, -2],
+            marked: true
+          });
+        });
+      });
     });
     describe('from 1,1', () => {
       describe('right', () => {
@@ -97,6 +145,54 @@ describe('day2', () => {
           });
           expect(result).toContainEqual({
             pos: [-1, 1],
+            marked: true
+          });
+        });
+      });
+
+      describe('up', () => {
+        it('1 marks 1 cells to up', () => {
+          const result = move('U', 1, [1, 1]);
+
+          expect(result).toContainEqual({
+            pos: [1, 2],
+            marked: true
+          });
+        });
+
+        it('2 marks 2 cells to up', () => {
+          const result = move('U', 2, [1, 1]);
+
+          expect(result).toContainEqual({
+            pos: [1, 2],
+            marked: true
+          });
+          expect(result).toContainEqual({
+            pos: [1, 3],
+            marked: true
+          });
+        });
+      });
+
+      describe('down', () => {
+        it('1 marks 1 cells to down', () => {
+          const result = move('D', 1, [1, 1]);
+
+          expect(result).toContainEqual({
+            pos: [1, 0],
+            marked: true
+          });
+        });
+
+        it('2 marks 2 cells to down', () => {
+          const result = move('D', 2, [1, 1]);
+
+          expect(result).toContainEqual({
+            pos: [1, 0],
+            marked: true
+          });
+          expect(result).toContainEqual({
+            pos: [1, -1],
             marked: true
           });
         });
