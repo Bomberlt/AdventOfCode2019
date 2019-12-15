@@ -26,9 +26,17 @@ export function move(direction, moves, startPos, existingMarks = []) {
 }
 
 function markedVertically(mark, pos) {
-  return mark.pos[0] == pos[0] && mark.pos[1] == pos[1] && mark.marked == '|';
+  return (
+    mark.pos[0] == pos[0] &&
+    mark.pos[1] == pos[1] &&
+    (mark.marked == '|' || mark.marked == 'X')
+  );
 }
 
 function markedHorizontally(mark, pos) {
-  return mark.pos[0] == pos[0] && mark.pos[1] == pos[1] && mark.marked == '-';
+  return (
+    mark.pos[0] == pos[0] &&
+    mark.pos[1] == pos[1] &&
+    (mark.marked == '-' || mark.marked == 'X')
+  );
 }

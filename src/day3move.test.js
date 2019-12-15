@@ -202,15 +202,28 @@ describe('day3', () => {
       });
     });
 
-    //move marks intersection and returns intersection data
-    //move doesnt mark intersection when crosses same wire
+    //move marks intersection
     describe('moving horizontally', () => {
-      describe('when already marked as "|" or "+"', () => {
+      describe('when already marked as "|"', () => {
         it('should mark as intersection', () => {
           const existingMarks = [{ pos: [1, 0], marked: '|' }];
           const newMarks = move('R', 2, [0, 0], existingMarks);
 
-          expect(newMarks).toContainEqual({ pos: [1, 0], marked: 'X' });
+          expect(newMarks).toContainEqual({
+            pos: [1, 0],
+            marked: 'X'
+          });
+        });
+      });
+      describe('when already marked as intersection', () => {
+        it('should mark as intersection', () => {
+          const existingMarks = [{ pos: [1, 0], marked: 'X' }];
+          const newMarks = move('R', 2, [0, 0], existingMarks);
+
+          expect(newMarks).toContainEqual({
+            pos: [1, 0],
+            marked: 'X'
+          });
         });
       });
 
@@ -219,7 +232,10 @@ describe('day3', () => {
           const existingMarks = [{ pos: [1, 0], marked: '-' }];
           const newMarks = move('R', 2, [0, 0], existingMarks);
 
-          expect(newMarks).not.toContainEqual({ pos: [1, 0], marked: 'X' });
+          expect(newMarks).not.toContainEqual({
+            pos: [1, 0],
+            marked: 'X'
+          });
         });
       });
 
@@ -227,17 +243,35 @@ describe('day3', () => {
         it('should not mark as intersection', () => {
           const newMarks = move('R', 2, [0, 0]);
 
-          expect(newMarks).not.toContainEqual({ pos: [1, 0], marked: 'X' });
+          expect(newMarks).not.toContainEqual({
+            pos: [1, 0],
+            marked: 'X'
+          });
         });
       });
     });
     describe('moving vertically', () => {
-      describe('when already marked as "-" or "+"', () => {
+      describe('when already marked as "-"', () => {
         it('should mark as intersection', () => {
           const existingMarks = [{ pos: [0, 1], marked: '-' }];
           const newMarks = move('U', 2, [0, 0], existingMarks);
 
-          expect(newMarks).toContainEqual({ pos: [0, 1], marked: 'X' });
+          expect(newMarks).toContainEqual({
+            pos: [0, 1],
+            marked: 'X'
+          });
+        });
+      });
+
+      describe('when already marked as "-"', () => {
+        it('should mark as intersection', () => {
+          const existingMarks = [{ pos: [0, 1], marked: 'X' }];
+          const newMarks = move('U', 2, [0, 0], existingMarks);
+
+          expect(newMarks).toContainEqual({
+            pos: [0, 1],
+            marked: 'X'
+          });
         });
       });
 
@@ -246,7 +280,10 @@ describe('day3', () => {
           const existingMarks = [{ pos: [0, 1], marked: '|' }];
           const newMarks = move('U', 2, [0, 0], existingMarks);
 
-          expect(newMarks).not.toContainEqual({ pos: [0, 1], marked: 'X' });
+          expect(newMarks).not.toContainEqual({
+            pos: [0, 1],
+            marked: 'X'
+          });
         });
       });
 
@@ -254,9 +291,14 @@ describe('day3', () => {
         it('should not mark as intersection', () => {
           const newMarks = move('U', 2, [0, 0]);
 
-          expect(newMarks).not.toContainEqual({ pos: [0, 1], marked: 'X' });
+          expect(newMarks).not.toContainEqual({
+            pos: [0, 1],
+            marked: 'X'
+          });
         });
       });
     });
+
+    // TODO: Test for: move doesnt mark intersection when crosses same wire
   });
 });
