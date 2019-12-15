@@ -1,7 +1,7 @@
 export function move(direction, moves, startPos, wire = 0, existingMarks = []) {
   const startX = startPos[0];
   const startY = startPos[1];
-  let marked = [];
+  let markedCells = [];
   for (let i = 0; i < moves; i++) {
     let pos = null;
     if (direction == 'R') pos = [startX + 1 + i, startY];
@@ -29,9 +29,9 @@ export function move(direction, moves, startPos, wire = 0, existingMarks = []) {
       toMark = 'X';
     }
 
-    marked.push({ pos, marked: toMark, wire: wire });
+    markedCells.push({ pos, marked: toMark, wire: wire });
   }
-  return marked;
+  return markedCells;
 }
 
 function wiresIntersectingWithHorizontal(marks) {
