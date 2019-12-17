@@ -1,8 +1,8 @@
-export function possibleNextDigit(lastDigit, pairIndexes = [0], currentIndex) {
-  if (pairIndexes.some(pairIndex => pairIndex == currentIndex - 1))
-    return [lastDigit];
-  const arr = new Array(10 - lastDigit).fill(9);
-  return arr.map((val, i) => val - i);
+export function day4() {
+  const min = 273025;
+  const max = 767253;
+  const result = guessCombinations(min, max);
+  console.log(`day4 result = ${result}`);
 }
 
 export function guessCombinations(min, max) {
@@ -35,9 +35,6 @@ export function guessCombinations(min, max) {
                   firstDigit * 100000;
                 if (combination >= min && combination <= max) {
                   if (!combinations.includes(combination)) {
-                    if (combination == 456789) {
-                      console.log(`Bad pair index? (${pairIndex})`);
-                    }
                     combinations.push(combination);
                   }
                 }
@@ -48,9 +45,6 @@ export function guessCombinations(min, max) {
       });
     });
   });
-  console.log('combinations');
-  console.log(combinations);
-  console.log(combinations[combinations.length - 1]);
   const smallest = combinations.reduce(
     (min, val) => (val < min ? val : min),
     combinations[0]
@@ -59,47 +53,8 @@ export function guessCombinations(min, max) {
     (min, val) => (val > min ? val : min),
     combinations[0]
   );
-  console.log(smallest);
-  console.log('smallest');
-  console.log(biggest);
-  console.log('biggest');
 
   return combinations.filter((v, i, a) => a.indexOf(v) === i);
-}
-
-export function isCombinationLegit(combination, min, max) {
-  // Six digit
-  if (combination.toString().length !== 6) {
-    console.log(`not 6 digits :(  ${combination}`);
-    return false;
-  }
-
-  // Within range
-  if (combination < min || combination > max) {
-    console.log(`out of range from (${min}, ${max}): ${combination}`);
-    return false;
-  }
-
-  // At least one pair
-  const combinationString = combination.toString().split('');
-  if (
-    !combinationString.some(
-      digit => combinationString.filter(x => x == digit).length >= 2
-    )
-  ) {
-    console.log(`no pairs in combination ${combination}`);
-    return false;
-  }
-
-  // Never decrease
-  if (
-    combinationString.some((digit, i) =>
-      i == 0 ? false : digit < combinationString[i - 1]
-    )
-  ) {
-    console.log(`digits decrease with combination ${combination}`);
-    return false;
-  }
 }
 
 export function pairsIndexes() {
@@ -144,4 +99,45 @@ export function pairsIndexes() {
   // Five pairs
   variants.push([0, 1, 2, 3, 4]);
   return variants;
+}
+
+export function possibleNextDigit(lastDigit, pairIndexes = [0], currentIndex) {
+  if (pairIndexes.some(pairIndex => pairIndex == currentIndex - 1))
+    return [lastDigit];
+  const arr = new Array(10 - lastDigit).fill(9);
+  return arr.map((val, i) => val - i);
+}
+
+export function isCombinationLegit(combination, min, max) {
+  // Six digit
+  if (combination.toString().length !== 6) {
+    return false;
+  }
+
+  // Within range
+  if (combination < min || combination > max) {
+    console.log(`out of range from (${min}, ${max}): ${combination}`);
+    return false;
+  }
+
+  // At least one pair
+  const combinationString = combination.toString().split('');
+  if (
+    !combinationString.some(
+      digit => combinationString.filter(x => x == digit).length >= 2
+    )
+  ) {
+    console.log(`no pairs in combination ${combination}`);
+    return false;
+  }
+
+  // Never decrease
+  if (
+    combinationString.some((digit, i) =>
+      i == 0 ? false : digit < combinationString[i - 1]
+    )
+  ) {
+    console.log(`digits decrease with combination ${combination}`);
+    return false;
+  }
 }

@@ -131,7 +131,7 @@ describe('day4', () => {
 
   describe('pairsIndexes', () => {
     const result = pairsIndexes();
-    console.log(result);
+    // console.log(result);
     expect(result.length).toBe(31);
   });
 
@@ -155,7 +155,7 @@ describe('day4', () => {
       expect(result.length).toBe(3);
     });
 
-    xit('should result day4', () => {
+    it('should result day4', () => {
       const min = 273025;
       const max = 767253;
       const result = guessCombinations(min, max);
@@ -165,14 +165,14 @@ describe('day4', () => {
         true
       );
       console.log(allCombinationsLegit);
-      expect(result.length).toBe(1);
+      expect(result.length).toBe(910);
     });
 
-    xit('should result day4 naste', () => {
+    it('should result day4 naste', () => {
       const min = 172930;
       const max = 683082;
       const result = guessCombinations(min, max);
-      expect(result.length).toBe(1);
+      expect(result.length).toBe(1675);
     });
   });
 });
