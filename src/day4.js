@@ -2,10 +2,17 @@ export function day4() {
   const min = 273025;
   const max = 767253;
   const result = guessCombinations(min, max);
-  console.log(`day4 result = ${result}`);
+  console.log(`day4 result = ${result.length}`);
 }
 
-export function guessCombinations(min, max) {
+export function day4part2() {
+  const min = 273025;
+  const max = 767253;
+  const result1 = guessCombinations(min, max, false);
+  console.log(`day4 part2 result = ${result1.length}`);
+}
+
+export function guessCombinations(min, max, allowNearbyPairs = true) {
   const minString = min.toString();
   const minFirstDigit = parseInt(minString[0]);
   const firstDigits = new Array(10 - minFirstDigit)
@@ -13,7 +20,11 @@ export function guessCombinations(min, max) {
     .map((val, i) => val - i);
 
   let combinations = [];
-  const pairIndexes = pairsIndexes();
+  console.log('allowNearbyPairs');
+  console.log(allowNearbyPairs);
+  const pairIndexes = pairsIndexes(allowNearbyPairs);
+  console.log('pairIndexes');
+  console.log(pairIndexes);
   pairIndexes.forEach(pairIndex => {
     firstDigits.forEach(firstDigit => {
       let secondDigits = possibleNextDigit(firstDigit, pairIndex, 1);
@@ -57,47 +68,72 @@ export function guessCombinations(min, max) {
   return combinations.filter((v, i, a) => a.indexOf(v) === i);
 }
 
-export function pairsIndexes() {
-  const variants = [];
+export function pairsIndexes(allowNearby = true) {
+  let variants = [];
   // For every digit
   for (let i = 0; i < 5; i++) {
     // One pair
     variants.push([i]);
     // Two pairs j = i+1 - 5, i<5
-    if (i < 4) {
-      for (let j = i + 1; j < 5; j++) {
-        // Second pair j
-        variants.push([i, j]);
-      }
-    }
+    variants = variants.concat(twoPairVariants(i, allowNearby));
     // Three pairs j = i-5
-    if (i < 3) {
-      for (let j = i + 1; j < 5; j++) {
-        // Second pair j
-        // Third pair k = j - 5
-        for (let k = j + 1; k < 5; k++) {
-          variants.push([i, j, k]);
-        }
+    variants = variants.concat(threePairVariants(i, allowNearby));
+    // Four pairs
+    variants = variants.concat(fourPairVariants(i, allowNearby));
+  }
+  // Five pairs
+  if (allowNearby) {
+    variants.push([0, 1, 2, 3, 4]);
+  }
+  return variants;
+}
+
+function twoPairVariants(i, allowNearby = true) {
+  let variants = [];
+  const startPairIndex = allowNearby ? i + 1 : i + 2;
+  if (i < 4) {
+    for (let j = startPairIndex; j < 5; j++) {
+      // Second pair j
+      variants.push([i, j]);
+    }
+  }
+  return variants;
+}
+
+function threePairVariants(i, allowNearby = true) {
+  const variants = [];
+  const startPairIndex = allowNearby ? i + 1 : i + 2;
+  if (i < 3) {
+    for (let j = startPairIndex; j < 5; j++) {
+      // Second pair j
+      // Third pair k = j - 5
+      const secondStartPairIndex = allowNearby ? j + 1 : j + 2;
+      for (let k = secondStartPairIndex; k < 5; k++) {
+        variants.push([i, j, k]);
       }
     }
-    // Four pairs
-    if (i < 2) {
-      for (let j = i + 1; j < 5; j++) {
-        // Second pair j
-        // Third pair k = j - 5
-        for (let k = j + 1; k < 5; k++) {
-          // Third pair k
-          // Fourth pair l = k - 5
-          for (let l = k + 1; l < 5; l++) {
-            // Fourth pair l
-            variants.push([i, j, k, l]);
-          }
+  }
+  return variants;
+}
+
+function fourPairVariants(i, allowNearby = true) {
+  const variants = [];
+  const startPairIndex = allowNearby ? i + 1 : i + 2;
+  if (i < 2) {
+    for (let j = startPairIndex; j < 5; j++) {
+      // Second pair j
+      // Third pair k = j - 5
+      const secondStartPairIndex = allowNearby ? j + 1 : j + 2;
+      for (let k = secondStartPairIndex; k < 5; k++) {
+        // Third pair k
+        // Fourth pair l = k - 5
+        for (let l = k + 1; l < 5; l++) {
+          // Fourth pair l
+          variants.push([i, j, k, l]);
         }
       }
     }
   }
-  // Five pairs
-  variants.push([0, 1, 2, 3, 4]);
   return variants;
 }
 

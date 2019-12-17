@@ -130,9 +130,28 @@ describe('day4', () => {
   });
 
   describe('pairsIndexes', () => {
-    const result = pairsIndexes();
-    // console.log(result);
-    expect(result.length).toBe(31);
+    it('has 31 pairs', () => {
+      const result = pairsIndexes();
+      // console.log(result);
+      expect(result.length).toBe(31);
+    });
+
+    it('has no pairs nearby when passed no nearby', () => {
+      const pairsVariants = pairsIndexes(false);
+      console.log('pairsVariants');
+      console.log(pairsVariants);
+      const nearbyPairsVariants = pairsVariants.filter(pairsVariant => {
+        return pairsVariant.some((pairIndex, i) => {
+          if (i == 0) {
+            return false;
+          }
+          const lastPairIndex = pairsVariant[i - 1];
+          return pairIndex == lastPairIndex + 1;
+        });
+      });
+      console.log(nearbyPairsVariants);
+      expect(nearbyPairsVariants.length).toBe(0);
+    });
   });
 
   describe('guessCombination', () => {
@@ -159,12 +178,12 @@ describe('day4', () => {
       const min = 273025;
       const max = 767253;
       const result = guessCombinations(min, max);
-      console.log('=============is legit?');
-      const allCombinationsLegit = result.reduce(
-        (acc, combination) => isCombinationLegit(combination, min, max),
-        true
-      );
-      console.log(allCombinationsLegit);
+      // console.log('=============is legit?');
+      // const allCombinationsLegit = result.reduce(
+      //   (acc, combination) => isCombinationLegit(combination, min, max),
+      //   true
+      // );
+      // console.log(allCombinationsLegit);
       expect(result.length).toBe(910);
     });
 
