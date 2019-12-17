@@ -1,4 +1,9 @@
-import { possibleNextDigit, pairsIndexes, guessCombinations } from './day4';
+import {
+  possibleNextDigit,
+  pairsIndexes,
+  guessCombinations,
+  isCombinationLegit
+} from './day4';
 
 describe('day4', () => {
   //6 digit
@@ -74,7 +79,7 @@ describe('day4', () => {
           ${8}
           ${9}
         `('should stay the same as lastDigit ($lastDigit)', ({ lastDigit }) => {
-          const pairIndex = 0;
+          const pairIndex = [0];
           const currentIndex = 1;
           const result = possibleNextDigit(lastDigit, pairIndex, currentIndex);
 
@@ -82,15 +87,55 @@ describe('day4', () => {
         });
       });
     });
+
+    describe('when pair is 0 and 1, current digit index is 1', () => {
+      it.each`
+        lastDigit
+        ${2}
+        ${3}
+        ${4}
+        ${5}
+        ${6}
+        ${7}
+        ${8}
+        ${9}
+      `('should stay the same as lastDigit ($lastDigit)', ({ lastDigit }) => {
+        const pairIndex = [0, 1];
+        const currentIndex = 1;
+        const result = possibleNextDigit(lastDigit, pairIndex, currentIndex);
+
+        expect(result[0]).toEqual(lastDigit);
+      });
+    });
+
+    describe('when pair is 0 and 1, current digit index is 2', () => {
+      it.each`
+        lastDigit
+        ${2}
+        ${3}
+        ${4}
+        ${5}
+        ${6}
+        ${7}
+        ${8}
+        ${9}
+      `('should stay the same as lastDigit ($lastDigit)', ({ lastDigit }) => {
+        const pairIndex = [0, 1];
+        const currentIndex = 2;
+        const result = possibleNextDigit(lastDigit, pairIndex, currentIndex);
+
+        expect(result[0]).toEqual(lastDigit);
+      });
+    });
   });
 
   describe('pairsIndexes', () => {
     const result = pairsIndexes();
-    expect(result).toBe(31);
+    console.log(result);
     expect(result.length).toBe(31);
   });
 
-  describe.only('guessCombination', () => {
+  describe('guessCombination', () => {
     it('should be only one when min is 999990', () => {
       const min = 999990;
       const max = 999999;
@@ -110,9 +155,22 @@ describe('day4', () => {
       expect(result.length).toBe(3);
     });
 
-    it('should result day4', () => {
+    xit('should result day4', () => {
       const min = 273025;
       const max = 767253;
+      const result = guessCombinations(min, max);
+      console.log('=============is legit?');
+      const allCombinationsLegit = result.reduce(
+        (acc, combination) => isCombinationLegit(combination, min, max),
+        true
+      );
+      console.log(allCombinationsLegit);
+      expect(result.length).toBe(1);
+    });
+
+    xit('should result day4 naste', () => {
+      const min = 172930;
+      const max = 683082;
       const result = guessCombinations(min, max);
       expect(result.length).toBe(1);
     });
