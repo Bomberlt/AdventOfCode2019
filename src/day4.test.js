@@ -44,7 +44,7 @@ describe('day4', () => {
         `('when $lastDigit', ({ lastDigit }) => {
           const result = possibleNextDigit(lastDigit);
 
-          expect(result.length).toEqual(10 - lastDigit);
+          expect(result.length).toEqual(10 - lastDigit - 1);
         });
       });
 
@@ -150,6 +150,7 @@ describe('day4', () => {
         });
       });
       console.log(nearbyPairsVariants);
+      expect(pairsVariants.length).toBe(31);
       expect(nearbyPairsVariants.length).toBe(0);
     });
   });
@@ -171,6 +172,8 @@ describe('day4', () => {
       const min = 889990;
       const max = 999999;
       const result = guessCombinations(min, max);
+      console.log('guessCombinations3');
+      console.log(result);
       expect(result.length).toBe(3);
     });
 
@@ -178,12 +181,12 @@ describe('day4', () => {
       const min = 273025;
       const max = 767253;
       const result = guessCombinations(min, max);
-      // console.log('=============is legit?');
-      // const allCombinationsLegit = result.reduce(
-      //   (acc, combination) => isCombinationLegit(combination, min, max),
-      //   true
-      // );
-      // console.log(allCombinationsLegit);
+      console.log('=============is legit?');
+      const allCombinationsLegit = result.reduce(
+        (acc, combination) => isCombinationLegit(combination, min, max),
+        true
+      );
+      console.log(allCombinationsLegit);
       expect(result.length).toBe(910);
     });
 

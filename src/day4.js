@@ -8,8 +8,11 @@ export function day4() {
 export function day4part2() {
   const min = 273025;
   const max = 767253;
-  const result1 = guessCombinations(min, max, false);
-  console.log(`day4 part2 result = ${result1.length}`);
+  const result = guessCombinations(min, max, false).sort();
+
+  console.log('result');
+  console.log(result);
+  console.log(`day4 part2 result = ${result.length}`);
 }
 
 export function guessCombinations(min, max, allowNearbyPairs = true) {
@@ -64,6 +67,10 @@ export function guessCombinations(min, max, allowNearbyPairs = true) {
     (min, val) => (val > min ? val : min),
     combinations[0]
   );
+  console.log('smallest');
+  console.log(smallest);
+  console.log('biggest');
+  console.log(biggest);
 
   return combinations.filter((v, i, a) => a.indexOf(v) === i);
 }
@@ -102,7 +109,7 @@ function twoPairVariants(i, allowNearby = true) {
 
 function threePairVariants(i, allowNearby = true) {
   const variants = [];
-  const startPairIndex = allowNearby ? i + 1 : i + 2;
+  let startPairIndex = allowNearby ? i + 1 : i + 2;
   if (i < 3) {
     for (let j = startPairIndex; j < 5; j++) {
       // Second pair j
@@ -113,6 +120,34 @@ function threePairVariants(i, allowNearby = true) {
       }
     }
   }
+  if (allowNearby) {
+    return variants;
+  }
+
+  startPairIndex = i + 2;
+  if (i < 3) {
+    for (let j = startPairIndex; j < 5; j++) {
+      // Second pair j
+      // Third pair k = j - 5
+      const secondStartPairIndex = j + 1;
+      for (let k = secondStartPairIndex; k < 5; k++) {
+        variants.push([i, j, k]);
+      }
+    }
+  }
+
+  startPairIndex = i + 1;
+  if (i < 3) {
+    for (let j = startPairIndex; j < 5; j++) {
+      // Second pair j
+      // Third pair k = j - 5
+      const secondStartPairIndex = j + 2;
+      for (let k = secondStartPairIndex; k < 5; k++) {
+        variants.push([i, j, k]);
+      }
+    }
+  }
+
   return variants;
 }
 
@@ -134,13 +169,21 @@ function fourPairVariants(i, allowNearby = true) {
       }
     }
   }
+  if (!allowNearby)
+    return [
+      [0, 2, 3, 4],
+      [0, 1, 2, 4]
+    ];
   return variants;
 }
 
 export function possibleNextDigit(lastDigit, pairIndexes = [0], currentIndex) {
   if (pairIndexes.some(pairIndex => pairIndex == currentIndex - 1))
     return [lastDigit];
-  const arr = new Array(10 - lastDigit).fill(9);
+  if (lastDigit == 9) {
+    return [];
+  }
+  const arr = new Array(10 - lastDigit - 1).fill(9);
   return arr.map((val, i) => val - i);
 }
 
