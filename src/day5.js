@@ -1,5 +1,5 @@
 import { opcode1, opcode2 } from './day2';
-export function opcode3(savePos, inputArray, input) {
+export function opcode3(savePos, inputArray, input = 2) {
   const newArray = inputArray.slice();
   newArray[savePos] = input;
   return newArray;
@@ -11,6 +11,7 @@ export function opcode4(param, arr, immediate) {
   } else {
     console.log(arr[param]);
   }
+  return arr;
 }
 
 export function callOpWithParameterMode(
@@ -27,6 +28,9 @@ export function callOpWithParameterMode(
     }
     if (op == 2) {
       return opcode2(input1, input2, input3, arr);
+    }
+    if (op == 3) {
+      return opcode3(input1, arr);
     }
     return opcode4(input1, arr);
   }
@@ -63,8 +67,9 @@ export function modifiedIntcode(program) {
   if (program[0] == 99) return program;
   let i = 0;
   do {
+    const moveOpIndex = program[i] == 3 || program[i] == 4 ? 2 : 4;
     program = modifiedOneOp(program, i);
-    i += 4;
+    i += moveOpIndex;
   } while (program[i] != 99 && program[i] != undefined);
   return program;
 }
