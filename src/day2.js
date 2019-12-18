@@ -5,11 +5,11 @@ export function opcode1(
   input2Index,
   outputIndex,
   array,
-  intermediate1 = 0,
-  intermediate2 = 0
+  immediate1 = 0,
+  immediate2 = 0
 ) {
-  const a = intermediate1 == 1 ? input1Index : array[input1Index];
-  const b = intermediate2 == 1 ? input2Index : array[input2Index];
+  const a = immediate1 == 1 ? input1Index : array[input1Index];
+  const b = immediate2 == 1 ? input2Index : array[input2Index];
   const newArray = array.slice();
   const output = a + b;
   newArray[outputIndex] = output;
@@ -20,9 +20,16 @@ export function opcode1(
   return newArray;
 }
 
-export function opcode2(input1Index, input2Index, outputIndex, array) {
-  const a = array[input1Index];
-  const b = array[input2Index];
+export function opcode2(
+  input1Index,
+  input2Index,
+  outputIndex,
+  array,
+  immediate1 = 0,
+  immediate2 = 0
+) {
+  const a = immediate1 == 1 ? input1Index : array[input1Index];
+  const b = immediate2 == 1 ? input2Index : array[input2Index];
   const newArray = array.slice();
   const output = a * b;
   newArray[outputIndex] = output;

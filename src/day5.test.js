@@ -46,8 +46,8 @@ describe('day5', () => {
   // parameter modes
   describe('callOpWithParameterMode', () => {
     describe('opcode1', () => {
-      describe('calling op1 with param modes 0 0 0', () => {
-        describe.each`
+      describe('param modes 0 0 0', () => {
+        it.each`
           input1 | input2 | output | arr             | expectedOutput
           ${1}   | ${2}   | ${3}   | ${[0, 0, 0, 0]} | ${0}
           ${1}   | ${2}   | ${3}   | ${[1, 1, 1, 1]} | ${2}
@@ -71,8 +71,8 @@ describe('day5', () => {
         );
       });
 
-      describe('calling op1 with param modes 0 0 1', () => {
-        describe.each`
+      describe('param modes 0 0 1', () => {
+        it.each`
           input1 | input2 | output | arr             | expectedOutput
           ${1}   | ${2}   | ${3}   | ${[0, 0, 0, 0]} | ${1}
           ${1}   | ${2}   | ${3}   | ${[1, 1, 1, 1]} | ${2}
@@ -96,8 +96,8 @@ describe('day5', () => {
         );
       });
 
-      describe('calling op1 with param modes 0 1 0', () => {
-        describe.each`
+      describe('param modes 0 1 0', () => {
+        it.each`
           input1 | input2 | output | arr             | expectedOutput
           ${1}   | ${2}   | ${3}   | ${[0, 0, 0, 0]} | ${2}
           ${1}   | ${2}   | ${3}   | ${[1, 1, 1, 1]} | ${3}
@@ -122,7 +122,83 @@ describe('day5', () => {
       });
     });
 
-    //opcode2
+    describe('opcode2', () => {
+      describe('param modes 0 0 0', () => {
+        it.each`
+          input1 | input2 | output | arr             | expectedOutput
+          ${1}   | ${2}   | ${3}   | ${[0, 0, 0, 0]} | ${0}
+          ${1}   | ${2}   | ${3}   | ${[1, 2, 1, 1]} | ${2}
+          ${1}   | ${2}   | ${3}   | ${[1, 0, 1, 1]} | ${0}
+          ${1}   | ${2}   | ${3}   | ${[1, 2, 3, 1]} | ${6}
+        `(
+          '$input1 | $input2 | $output | $arr changes $output `rd to $expectedOutput 000',
+          ({ input1, input2, output, arr, expectedOutput }) => {
+            const paramsMode = 0;
+            const result = callOpWithParameterMode(
+              paramsMode,
+              arr,
+              2,
+              input1,
+              input2,
+              output
+            );
+
+            expect(result[output]).toBe(expectedOutput);
+          }
+        );
+      });
+
+      describe('param modes 0 0 1', () => {
+        it.each`
+          input1 | input2 | output | arr             | expectedOutput
+          ${1}   | ${2}   | ${3}   | ${[0, 0, 0, 0]} | ${0}
+          ${1}   | ${2}   | ${3}   | ${[1, 2, 1, 1]} | ${1}
+          ${1}   | ${2}   | ${3}   | ${[1, 0, 1, 1]} | ${1}
+          ${1}   | ${2}   | ${3}   | ${[1, 2, 3, 1]} | ${3}
+        `(
+          '$input1 | $input2 | $output | $arr changes $output `rd to $expectedOutput',
+          ({ input1, input2, output, arr, expectedOutput }) => {
+            const paramsMode = 1;
+            const result = callOpWithParameterMode(
+              paramsMode,
+              arr,
+              2,
+              input1,
+              input2,
+              output
+            );
+
+            expect(result[output]).toBe(expectedOutput);
+          }
+        );
+      });
+
+      describe('param modes 0 1 0', () => {
+        it.each`
+          input1 | input2 | output | arr             | expectedOutput
+          ${1}   | ${2}   | ${3}   | ${[0, 0, 0, 0]} | ${0}
+          ${1}   | ${2}   | ${3}   | ${[1, 1, 1, 1]} | ${2}
+          ${1}   | ${2}   | ${3}   | ${[1, 0, 1, 1]} | ${0}
+          ${1}   | ${2}   | ${3}   | ${[1, 2, 3, 1]} | ${4}
+        `(
+          '$input1 | $input2 | $output | $arr changes $output `rd to $expectedOutput',
+          ({ input1, input2, output, arr, expectedOutput }) => {
+            const paramsMode = 10;
+            const result = callOpWithParameterMode(
+              paramsMode,
+              arr,
+              2,
+              input1,
+              input2,
+              output
+            );
+
+            expect(result[output]).toBe(expectedOutput);
+          }
+        );
+      });
+    });
+
     //opcode3
     //opcode4
     //opcode99
