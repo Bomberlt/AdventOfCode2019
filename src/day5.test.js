@@ -199,8 +199,51 @@ describe('day5', () => {
       });
     });
 
-    //opcode3
-    //opcode4
-    //opcode99
+    describe('opcode4', () => {
+      describe('param modes 0 0 0', () => {
+        let consoleOutput = null;
+        const mockedLog = output => (consoleOutput = output);
+        beforeEach(() => {
+          consoleOutput = null;
+          console.log = mockedLog;
+        });
+        it.each`
+          param | arr             | expected
+          ${0}  | ${[4, 0, 0, 0]} | ${4}
+          ${1}  | ${[4, 1, 1, 1]} | ${1}
+          ${2}  | ${[4, 0, 0, 1]} | ${0}
+          ${3}  | ${[4, 2, 3, 1]} | ${1}
+        `(
+          '$param | $arr outputs $param `rd value ($expected )',
+          ({ param, arr, expected }) => {
+            const paramsMode = 0;
+            callOpWithParameterMode(paramsMode, arr, 4, param);
+
+            expect(consoleOutput).toBe(expected);
+          }
+        );
+      });
+
+      describe('param modes 0 0 1', () => {
+        let consoleOutput = null;
+        const mockedLog = output => (consoleOutput = output);
+        beforeEach(() => {
+          consoleOutput = null;
+          console.log = mockedLog;
+        });
+        it.each`
+          param | arr             | expected
+          ${0}  | ${[4, 0, 0, 0]} | ${0}
+          ${1}  | ${[4, 1, 1, 1]} | ${1}
+          ${2}  | ${[4, 0, 0, 1]} | ${2}
+          ${3}  | ${[4, 2, 3, 1]} | ${3}
+        `('$param | $arr outputs $param', ({ param, arr, expected }) => {
+          const paramsMode = 1;
+          callOpWithParameterMode(paramsMode, arr, 4, param);
+
+          expect(consoleOutput).toBe(expected);
+        });
+      });
+    });
   });
 });

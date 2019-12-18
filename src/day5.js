@@ -5,8 +5,12 @@ export function opcode3(savePos, inputArray, input) {
   return newArray;
 }
 
-export function opcode4(param, arr) {
-  console.log(arr[param]);
+export function opcode4(param, arr, immediate) {
+  if (immediate) {
+    console.log(param);
+  } else {
+    console.log(arr[param]);
+  }
 }
 
 export function callOpWithParameterMode(
@@ -21,7 +25,10 @@ export function callOpWithParameterMode(
     if (op == 1) {
       return opcode1(input1, input2, input3, arr);
     }
-    return opcode2(input1, input2, input3, arr);
+    if (op == 2) {
+      return opcode2(input1, input2, input3, arr);
+    }
+    return opcode4(input1, arr);
   }
 
   const firstParamImmediate = paramsMode % 10 == 1;
@@ -37,12 +44,16 @@ export function callOpWithParameterMode(
     );
   }
 
-  return opcode2(
-    input1,
-    input2,
-    input3,
-    arr,
-    firstParamImmediate,
-    secondParamImmediate
-  );
+  if (op == 2) {
+    return opcode2(
+      input1,
+      input2,
+      input3,
+      arr,
+      firstParamImmediate,
+      secondParamImmediate
+    );
+  }
+
+  return opcode4(input1, arr, firstParamImmediate);
 }
