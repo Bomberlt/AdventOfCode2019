@@ -1,4 +1,6 @@
 import { opcode1, opcode2 } from './day2';
+import { day5input } from '../inputs/day5input';
+
 export function opcode3(savePos, inputArray, input = 2) {
   const newArray = inputArray.slice();
   newArray[savePos] = input;
@@ -85,4 +87,14 @@ function modifiedOneOp(program, opIndex) {
     program[opIndex + 2],
     program[opIndex + 3]
   );
+}
+
+export function day5() {
+  const input = day5input();
+  console.log('Day5 input');
+  console.log(input);
+  console.log('Day5 answer = ');
+  const output = modifiedIntcode(input);
+  console.log('Day5 output');
+  console.log(output);
 }
