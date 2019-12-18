@@ -1,8 +1,15 @@
 import { day2input, day2inputChanged } from '../inputs/day2input';
 
-export function opcode1(input1Index, input2Index, outputIndex, array) {
-  const a = array[input1Index];
-  const b = array[input2Index];
+export function opcode1(
+  input1Index,
+  input2Index,
+  outputIndex,
+  array,
+  intermediate1 = 0,
+  intermediate2 = 0
+) {
+  const a = intermediate1 == 1 ? input1Index : array[input1Index];
+  const b = intermediate2 == 1 ? input2Index : array[input2Index];
   const newArray = array.slice();
   const output = a + b;
   newArray[outputIndex] = output;

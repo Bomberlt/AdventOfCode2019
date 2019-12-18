@@ -23,11 +23,7 @@ export function guessCombinations(min, max, allowNearbyPairs = true) {
     .map((val, i) => val - i);
 
   let combinations = [];
-  console.log('allowNearbyPairs');
-  console.log(allowNearbyPairs);
   const pairIndexes = pairsIndexes(allowNearbyPairs);
-  console.log('pairIndexes');
-  console.log(pairIndexes);
   pairIndexes.forEach(pairIndex => {
     firstDigits.forEach(firstDigit => {
       let secondDigits = possibleNextDigit(firstDigit, pairIndex, 1);
@@ -67,11 +63,6 @@ export function guessCombinations(min, max, allowNearbyPairs = true) {
     (min, val) => (val > min ? val : min),
     combinations[0]
   );
-  console.log('smallest');
-  console.log(smallest);
-  console.log('biggest');
-  console.log(biggest);
-
   return combinations.filter((v, i, a) => a.indexOf(v) === i);
 }
 
