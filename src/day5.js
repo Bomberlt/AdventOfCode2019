@@ -57,3 +57,27 @@ export function callOpWithParameterMode(
 
   return opcode4(input1, arr, firstParamImmediate);
 }
+
+export function modifiedIntcode(program) {
+  program = program.map(x => parseInt(x));
+  if (program[0] == 99) return program;
+  let i = 0;
+  do {
+    program = modifiedOneOp(program, i);
+    i += 4;
+  } while (program[i] != 99 && program[i] != undefined);
+  return program;
+}
+
+function modifiedOneOp(program, opIndex) {
+  const op = program[opIndex] % 100;
+  const paramsMode = Math.floor(program[opIndex] / 100);
+  return callOpWithParameterMode(
+    paramsMode,
+    program,
+    op,
+    program[opIndex + 1],
+    program[opIndex + 2],
+    program[opIndex + 3]
+  );
+}

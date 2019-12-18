@@ -1,4 +1,9 @@
-import { opcode3, opcode4, callOpWithParameterMode } from './day5';
+import {
+  opcode3,
+  opcode4,
+  callOpWithParameterMode,
+  modifiedIntcode
+} from './day5';
 
 describe('day5', () => {
   const originalLog = console.log;
@@ -43,7 +48,6 @@ describe('day5', () => {
     );
   });
 
-  // parameter modes
   describe('callOpWithParameterMode', () => {
     describe('opcode1', () => {
       describe('param modes 0 0 0', () => {
@@ -244,6 +248,35 @@ describe('day5', () => {
           expect(consoleOutput).toBe(expected);
         });
       });
+    });
+  });
+
+  describe('modifiedIntCode', () => {
+    it.each`
+      input                                         | output
+      ${[99]}                                       | ${[99]}
+      ${[1, 0, 0, 0, 99]}                           | ${[2, 0, 0, 0, 99]}
+      ${[2, 3, 0, 3, 99]}                           | ${[2, 3, 0, 6, 99]}
+      ${[2, 4, 4, 5, 99, 0]}                        | ${[2, 4, 4, 5, 99, 9801]}
+      ${[1, 1, 1, 4, 99, 5, 6, 0, 99]}              | ${[30, 1, 1, 4, 2, 5, 6, 0, 99]}
+      ${[1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50]} | ${[3500, 9, 10, 70, 2, 3, 11, 0, 99, 30, 40, 50]}
+      ${[1, 0, 0, 0, 1, 0, 0, 4, 99]}               | ${[2, 0, 0, 0, 4, 0, 0, 4, 99]}
+      ${[1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 99]}   | ${[8, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 99]}
+      ${['1', '0', '0', '0', '99']}                 | ${[2, 0, 0, 0, 99]}
+      ${[1002, 4, 3, 4, 33]}                        | ${[1002, 4, 3, 4, 99]}
+      ${[1101, 100, -1, 4, 0]}                      | ${[1101, 100, -1, 4, 99]}
+      ${[4, 2, 99]}                                 | ${[4, 2, 99]}
+      ${[3, 2, 1, 2, 2, 5, 99]}                     | ${[3, 2, 2, 2, 2, 4, 99]}
+    `('$input | $output ', ({ input, output }) => {
+      // 0  1  2  3  4  5  6  7
+      const result = modifiedIntcode(input);
+
+      if (output.length == 1) {
+        expect(result.length).toBe(1);
+        expect(result[0]).toBe(output[0]);
+      } else {
+        expect(result).toEqual(output);
+      }
     });
   });
 });
