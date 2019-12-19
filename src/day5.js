@@ -23,8 +23,12 @@ export function callOpWithParameterMode(
   op,
   input1,
   input2,
-  input3
+  input3,
+  programInput = 2
 ) {
+  // console.warn('op');
+  // console.warn(op);
+  // console.warn(paramsMode + ';' + input1 + ';' + input2 + ';' + input3);
   if (paramsMode == 0) {
     if (op == 1) {
       return opcode1(input1, input2, input3, arr);
@@ -33,16 +37,16 @@ export function callOpWithParameterMode(
       return opcode2(input1, input2, input3, arr);
     }
     if (op == 3) {
-      return opcode3(input1, arr);
+      return opcode3(input1, arr, programInput);
     }
     if (op == 4) {
       return opcode4(input1, arr);
     }
     if (op == 5) {
-      return opcode5(input1, arr);
+      return opcode5(input1, input2, arr);
     }
     if (op == 6) {
-      return opcode6(input1, arr);
+      return opcode6(input1, input2, arr);
     }
     if (op == 7) {
       return opcode7(input1, input2, input3, arr);
@@ -126,23 +130,28 @@ export function callOpWithParameterMode(
   return arr;
 }
 
-export function modifiedIntcode(program) {
+export function modifiedIntcode(program, programInput = 2) {
+  // console.warn('program');
+  // console.warn(program);
   program = program.map(x => parseInt(x));
   if (program[0] == 99) return program;
   let i = 0;
   do {
-    const moveOpIndex = program[i] == 3 || program[i] == 4 ? 2 : 4;
-    if (program[i] == 5 || program[i] == 6) {
-      i = modifiedOneOp(program, i);
+    const op = program[i] % 10;
+    const moveOpIndex = op == 3 || op == 4 ? 2 : 4;
+
+    if (op == 5 || op == 6) {
+      const newAddress = modifiedOneOp(program, i, programInput);
+      i = newAddress == null ? i + 3 : newAddress;
     } else {
-      program = modifiedOneOp(program, i);
+      program = modifiedOneOp(program, i, programInput);
       i += moveOpIndex;
     }
   } while (program[i] != 99 && program[i] != undefined);
   return program;
 }
 
-function modifiedOneOp(program, opIndex) {
+function modifiedOneOp(program, opIndex, programInput = 2) {
   const op = program[opIndex] % 100;
   const paramsMode = Math.floor(program[opIndex] / 100);
   return callOpWithParameterMode(
@@ -151,7 +160,8 @@ function modifiedOneOp(program, opIndex) {
     op,
     program[opIndex + 1],
     program[opIndex + 2],
-    program[opIndex + 3]
+    program[opIndex + 3],
+    programInput
   );
 }
 
@@ -162,5 +172,15 @@ export function day5() {
   console.log('Day5 answer = ');
   const output = modifiedIntcode(input);
   console.log('Day5 output');
+  console.log(output);
+}
+
+export function day5part2() {
+  const input = day5input();
+  console.log('Day5Part2 input');
+  console.log(input);
+  console.log('Day5Part2 answer = ');
+  const output = modifiedIntcode(input, 5);
+  console.log('Day5Part2 output');
   console.log(output);
 }
