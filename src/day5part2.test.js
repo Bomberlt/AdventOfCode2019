@@ -218,20 +218,32 @@ describe('modifiedIntCode', () => {
   });
 
   const programInput = 2;
-  it.each`
-    input                                   | output                                 | expected
-    ${[3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8]} | ${[3, 9, 8, 9, 10, 9, 4, 9, 99, 2, 8]} | ${0}
-  `('$input | $output | $expected', ({ input, output, expected }) => {
-    // 0  1  2  3  4  5  6  7
-    const result = modifiedIntcode(input);
+  describe('input; compare to 8; output', () => {
+    it.each`
+      input                                   | output                                 | expected
+      ${[3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8]} | ${[3, 9, 8, 9, 10, 9, 4, 9, 99, 0, 8]} | ${0}
+      ${[3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8]} | ${[3, 9, 7, 9, 10, 9, 4, 9, 99, 1, 8]} | ${1}
+      ${[3, 3, 1108, -1, 8, 3, 4, 3, 99]}     | ${[3, 3, 1108, 0, 8, 3, 4, 3, 99]}     | ${0}
+      ${[3, 3, 1107, -1, 8, 3, 4, 3, 99]}     | ${[3, 3, 1107, 1, 8, 3, 4, 3, 99]}     | ${1}
+    `('$input | $output | $expected', ({ input, output, expected }) => {
+      // 0  1  2  3  4   5  6  7  8    9  10
+      const result = modifiedIntcode(input);
 
-    if (output.length == 1) {
-      expect(result.length).toBe(1);
-      expect(result[0]).toBe(output[0]);
-      expect(consoleOutput).toBe(expected);
-    } else {
       expect(result).toEqual(output);
       expect(consoleOutput).toBe(expected);
-    }
+    });
+  });
+
+  describe('jump tests', () => {
+    it.each`
+      input                                                        | output                                                       | expected
+      ${[3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9]} | ${[3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9]} | ${0}
+    `('$input | $output | $expected', ({ input, output, expected }) => {
+      // 0  1  2  3  4   5  6  7  8    9  10
+      const result = modifiedIntcode(input);
+
+      expect(result).toEqual(output);
+      expect(consoleOutput).toBe(expected);
+    });
   });
 });

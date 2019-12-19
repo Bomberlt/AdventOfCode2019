@@ -1,5 +1,6 @@
 import { opcode1, opcode2 } from './day2';
 import { day5input } from '../inputs/day5input';
+import { opcode5, opcode6, opcode7, opcode8 } from './day5part2';
 
 export function opcode3(savePos, inputArray, input = 2) {
   const newArray = inputArray.slice();
@@ -34,7 +35,21 @@ export function callOpWithParameterMode(
     if (op == 3) {
       return opcode3(input1, arr);
     }
-    return opcode4(input1, arr);
+    if (op == 4) {
+      return opcode4(input1, arr);
+    }
+    if (op == 5) {
+      return opcode5(input1, arr);
+    }
+    if (op == 6) {
+      return opcode6(input1, arr);
+    }
+    if (op == 7) {
+      return opcode7(input1, input2, input3, arr);
+    }
+    if (op == 8) {
+      return opcode8(input1, input2, input3, arr);
+    }
   }
 
   const firstParamImmediate = paramsMode % 10 == 1;
@@ -61,7 +76,54 @@ export function callOpWithParameterMode(
     );
   }
 
-  return opcode4(input1, arr, firstParamImmediate);
+  if (op == 4) {
+    opcode4(input1, arr, firstParamImmediate);
+    return arr;
+  }
+
+  if (op == 5) {
+    return opcode5(
+      input1,
+      input2,
+      arr,
+      firstParamImmediate,
+      secondParamImmediate
+    );
+  }
+
+  if (op == 6) {
+    return opcode6(
+      input1,
+      input2,
+      arr,
+      firstParamImmediate,
+      secondParamImmediate
+    );
+  }
+
+  if (op == 7) {
+    return opcode7(
+      input1,
+      input2,
+      input3,
+      arr,
+      firstParamImmediate,
+      secondParamImmediate
+    );
+  }
+
+  if (op == 8) {
+    return opcode8(
+      input1,
+      input2,
+      input3,
+      arr,
+      firstParamImmediate,
+      secondParamImmediate
+    );
+  }
+
+  return arr;
 }
 
 export function modifiedIntcode(program) {
@@ -70,8 +132,12 @@ export function modifiedIntcode(program) {
   let i = 0;
   do {
     const moveOpIndex = program[i] == 3 || program[i] == 4 ? 2 : 4;
-    program = modifiedOneOp(program, i);
-    i += moveOpIndex;
+    if (program[i] == 5 || program[i] == 6) {
+      i = modifiedOneOp(program, i);
+    } else {
+      program = modifiedOneOp(program, i);
+      i += moveOpIndex;
+    }
   } while (program[i] != 99 && program[i] != undefined);
   return program;
 }
